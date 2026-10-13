@@ -13,6 +13,17 @@ return new class extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('type')->default('shipping'); // billing, shipping
+            $table->string('name');
+            $table->string('phone');
+            $table->string('address_line1');
+            $table->string('address_line2')->nullable();
+            $table->string('city');
+            $table->string('state')->nullable();
+            $table->string('postcode')->nullable();
+            $table->string('country', 2)->default('BD');
+            $table->boolean('is_default')->default(false);
             $table->timestamps();
         });
     }

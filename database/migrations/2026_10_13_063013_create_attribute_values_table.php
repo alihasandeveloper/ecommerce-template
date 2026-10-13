@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
+            $table->string('value');
+            $table->string('slug');
+            $table->string('color_code')->nullable();
+            $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
     }

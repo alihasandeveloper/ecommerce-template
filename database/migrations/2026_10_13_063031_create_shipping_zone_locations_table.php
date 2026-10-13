@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('shipping_zone_locations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shipping_zone_id')->constrained('shipping_zones')->cascadeOnDelete();
+            $table->string('type'); // country, state, city, postcode
+            $table->string('code');
             $table->timestamps();
         });
     }

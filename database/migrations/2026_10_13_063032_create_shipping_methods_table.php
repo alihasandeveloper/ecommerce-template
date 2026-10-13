@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('shipping_methods', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('shipping_zone_id')->constrained('shipping_zones')->cascadeOnDelete();
+            $table->string('title');
+            $table->string('type'); // flat_rate, free_shipping, local_pickup, weight_based
+            $table->decimal('cost', 12, 2)->default(0.00);
+            $table->decimal('min_order_amount', 12, 2)->nullable();
+            $table->json('settings')->nullable();
+            $table->integer('sort_order')->default(0);
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

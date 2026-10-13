@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('order_status_histories', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('order_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->string('status');
+            $table->text('note')->nullable();
+            $table->boolean('is_customer_notified')->default(false);
             $table->timestamps();
         });
     }

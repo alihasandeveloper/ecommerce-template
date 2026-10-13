@@ -46,8 +46,15 @@ WooCommerce-style, kintu simple ebong functional ekta ecommerce database design 
 | email | string, unique | |
 | phone | string, nullable | |
 | password | string | |
-| role | enum(`admin`,`customer`) | default `customer` |
+| role | enum(`super_admin`,`admin`,`editor`,`customer`) | default `customer` |
 | timestamps | | |
+
+#### Roles & Privileges
+- **`super_admin`**: Full system access (all privileges).
+- **`admin`**: Catalog, orders, payments, coupons, shipping, reviews, reports, users management.
+- **`editor`**: Catalog management (products, categories, brands, attributes, tags), view orders, manage reviews.
+- **`customer`**: Storefront access (view products, place orders, create reviews).
+
 
 ### `addresses`
 

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +25,25 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configurePermissions();
+    }
+
+    /**
+     * Configure Gate authorization checks based on user privileges.
+     */
+    protected function configurePermissions(): void
+    {
+        Gate::before(function ($user, string $ability): ?bool {
+            if (method_exists($user, 'isSuperAdmin') && $user->isSuperAdmin()) {
+                return true;
+            }
+
+            if (method_exists($user, 'hasPrivilege') && $user->hasPrivilege($ability)) {
+                return true;
+            }
+
+            return null;
+        });
     }
 
     /**
